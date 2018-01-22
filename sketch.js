@@ -3,7 +3,7 @@ const FILE_X_LENGTH = 6;
 const FILE_Y_LENGTH = 5;
 const TILE_SIZE = 256;
 const TILE_NAME = '5892_6709';
-
+const FILE_PATH = 'tileData/naver_90/';
 var canvasBuffer = [];
 var resultArray = [];
 var testArray = [];
@@ -42,7 +42,7 @@ function getFile(defultFile) {
     for (let i = newFileName[0] + FILE_Y_LENGTH - 1; i > newFileName[0] - 1; i--) {
         for (let j = newFileName[1]; j < newFileName[1] + FILE_X_LENGTH; j++) {
             testArray.push(i + '_' + j + '.jpg');
-            resultArray.push(loadImage('naver_70/'+i + '_' + j + '.jpg'));
+            resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg'));
         }
     }
 
