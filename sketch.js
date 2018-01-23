@@ -1,16 +1,17 @@
-
 const FILE_X_LENGTH = 6;
 const FILE_Y_LENGTH = 5;
 const TILE_SIZE = 256;
-const TILE_NAME = '5892_6709';
-const FILE_PATH = 'tileData/naver_90/';
+const TILE_NAME = '116074_279368';
+const FILE_PATH = 'tileData/yeouido/vworld_3d_100/';
 var canvasBuffer = [];
 var resultArray = [];
-var testArray = [];
+
+
 function setup() {
 
     createCanvas(TILE_SIZE * FILE_Y_LENGTH, TILE_SIZE * FILE_X_LENGTH);
-    getFile(TILE_NAME);
+    //this[FUNCTION_NAME]();
+    selectMapFunction()
 
     for (let i = 0; i < FILE_Y_LENGTH; i++) {
         //버퍼, 시작x, 시작 y
@@ -29,21 +30,49 @@ function draw() {
     }
 }
 
-function drawBuffer(drawbuffer, offset){
-    drawbuffer.image(resultArray[offset],0,0);
+function drawBuffer(drawbuffer, offset) {
+    drawbuffer.image(resultArray[offset], 0, 0);
 }
 
 
-function getFile(defultFile) {
-    let newFileName = defultFile.split('_');
-    newFileName[0] = Number(newFileName[0]);
-    newFileName[1] = Number(newFileName[1]);
+function selectMapFunction() {
+    let map = FILE_PATH.split('/')[2].replace(/[0-9_]/g, '');
+    switch (map) {
+        case 'naver':
+        case 'vworldd':
+            getFileNaver_Vworld3D();
+            break;
+        case 'vworld':
+            getFileVworld();
+            break;
+        ''
+    }
+}
 
-    for (let i = newFileName[0] + FILE_Y_LENGTH - 1; i > newFileName[0] - 1; i--) {
-        for (let j = newFileName[1]; j < newFileName[1] + FILE_X_LENGTH; j++) {
-            testArray.push(i + '_' + j + '.jpg');
+function getFileNaver_Vworld3D() {
+
+    let defultFileCoor = getCoorder();
+    for (let i = defultFileCoor[0] + FILE_Y_LENGTH - 1; i > defultFileCoor[0] - 1; i--) {
+        for (let j = defultFileCoor[1]; j < defultFileCoor[1] + FILE_X_LENGTH; j++) {
             resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg'));
         }
     }
+}
 
+function getFileVworld() {
+
+    let defultFileCoor = getCoorder();
+    for (let i = defultFileCoor[0]; i < defultFileCoor[0] + FILE_Y_LENGTH; i++) {
+        for (let j = defultFileCoor[1]; j < defultFileCoor[1] + FILE_X_LENGTH; j++) {
+            resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg'));
+        }
+    }
+}
+
+function getCoorder() {
+    let newFileName = TILE_NAME.split('_');
+    newFileName[0] = Number(newFileName[0]);
+    newFileName[1] = Number(newFileName[1]);
+
+    return newFileName;
 }
