@@ -1,16 +1,17 @@
 const FILE_X_LENGTH = 6;
 const FILE_Y_LENGTH = 5;
+const TILE_LEVEL = 13;
+
 const TILE_SIZE = 256;
-const TILE_NAME = '116074_279368';
-const FILE_PATH = 'tileData/yeouido/vworld_3d_100/';
+const TILE_NAME = '29152_70190';
+const FILE_PATH = 'tileData/sulackSan/vworld_3d_100/';
+
 var canvasBuffer = [];
 var resultArray = [];
-
 
 function setup() {
 
     createCanvas(TILE_SIZE * FILE_Y_LENGTH, TILE_SIZE * FILE_X_LENGTH);
-    //this[FUNCTION_NAME]();
     selectMapFunction()
 
     for (let i = 0; i < FILE_Y_LENGTH; i++) {
@@ -45,18 +46,24 @@ function selectMapFunction() {
         case 'vworld':
             getFileVworld();
             break;
-        ''
+            ''
     }
 }
 
 function getFileNaver_Vworld3D() {
 
+    let key = '&Key=YourKey';
     let defultFileCoor = getCoorder();
     for (let i = defultFileCoor[0] + FILE_Y_LENGTH - 1; i > defultFileCoor[0] - 1; i--) {
+        let server = 'xdworld' + (i % 4 == 0 ? '' : i % 4);
         for (let j = defultFileCoor[1]; j < defultFileCoor[1] + FILE_X_LENGTH; j++) {
-            resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg'));
+            let url = 'http://' + server + '.vworld.kr:8080/XDServer/3DData?Version=2.0.0.0&Request=GetLayer&Layer=tile_mo_HD&Level=' + TILE_LEVEL + '&IDX=' + j + '&IDY=' + i + key;
+            
+            //resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg')); 로컬 파일 결합
+            resultArray.push(loadImage(url)); // url 을 통한 파일 다운 + 결합
         }
     }
+
 }
 
 function getFileVworld() {
