@@ -1,9 +1,9 @@
-const FILE_PATH = 'tileData/sulackSan/vworld_d_100/',
-    FILE_X_LENGTH = 10,
-    FILE_Y_LENGTH = 10,
+const FILE_PATH = 'tileData/sulackSan/vworld_70/',
+    FILE_X_LENGTH = 6,
+    FILE_Y_LENGTH = 5,
     TILE_LEVEL = 15,
     TILE_SIZE = 50,
-    TILE_NAME = '116074_279368',
+    TILE_NAME = '101004_224615',
     APIKEY_Vworld = '&Key=Your_APIKEY';
 
 
@@ -38,6 +38,10 @@ function drawBuffer(drawbuffer, offset) {
     drawbuffer.image(resultArray[offset], 0, 0);
 }
 
+function getFile(event){
+    let filepath = event.target.files[0];
+
+}
 
 function selectMapFunction() {
     let map = FILE_PATH.split('/')[2].replace(/[0-9_]/g, '');
@@ -64,7 +68,7 @@ function getFileNaver() {
         for (let j = defultFileCoor[1]; j < defultFileCoor[1] + FILE_X_LENGTH; j++) {
             let server = 'https://simg.pstatic.net/onetile/get/184/0/1/';
             let url = server + TILE_LEVEL + '/' + j + '/' + i + '/bl_st_bg'
-            resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg'));
+            resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg', TILE_SIZE));
             //resultArray.push(loadImage(url, TILE_SIZE)); // url 을 통한 파일 다운 + 결합
         }
     }
@@ -76,7 +80,7 @@ function getFileDaum() {
         for (let j = defultFileCoor[1]; j < defultFileCoor[1] + FILE_X_LENGTH; j++) {
             let server = 'map' + (j % 4);
             let url = "http://map" + server + ".daumcdn.net/map_skyview/L" + TILE_LEVEL + "/" + i + "/" + j + ".jpg?v=160114"
-            resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg'));
+            resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg', TILE_SIZE));
             //resultArray.push(loadImage(url, TILE_SIZE)); // url 을 통한 파일 다운 + 결합
         }
     }
@@ -88,8 +92,8 @@ function getFileVworld3D() {
         for (let j = defultFileCoor[1]; j < defultFileCoor[1] + FILE_X_LENGTH; j++) {
             let server = 'xdworld1'; // + (j % 4 == 0 ? '' : j % 4);
             let url = 'http://' + server + '.vworld.kr:8080/XDServer/3DData?Version=2.0.0.0&Request=GetLayer&Layer=tile_mo_HD&Level=' + TILE_LEVEL + '&IDX=' + j + '&IDY=' + i + APIKEY_Vworld;
-            //resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg')); 로컬 파일 결합
-            resultArray.push(loadImage(url, TILE_SIZE)); // url 을 통한 파일 다운 + 결합
+            //resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg', TILE_SIZE)); 로컬 파일 결합
+            resultArray.push(loadImage(url, TILE_SIZE, TILE_SIZE)); // url 을 통한 파일 다운 + 결합
         }
     }
 }
@@ -101,8 +105,8 @@ function getFileVworld() {
         let server = 'xdworld'; // + (i % 4 == 0 ? '' : i % 4);
         for (let j = defultFileCoor[1]; j < defultFileCoor[1] + FILE_X_LENGTH; j++) {
             let url = 'http://' + server + '.vworld.kr:8080/XDServer/3DData?Version=2.0.0.0&Request=GetLayer&Layer=tile_mo_HD&Level=' + TILE_LEVEL + '&IDX=' + j + '&IDY=' + i + APIKEY_Vworld;
-            //resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg')); 로컬 파일 결합
-            resultArray.push(loadImage(url)); // url 을 통한 파일 다운 + 결합
+            resultArray.push(loadImage(FILE_PATH + i + '_' + j + '.jpg', TILE_SIZE));
+            //resultArray.push(loadImage(url)); // url 을 통한 파일 다운 + 결합
         }
     }
 }
